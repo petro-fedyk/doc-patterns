@@ -3,6 +3,28 @@
 
 ![picture of diagram](<use-case.png>)
 
+
+## 3. Preconditions
+- Patient is registered in the system  
+- Doctor is authenticated  
+- System is operational  
+- Network connection is available  
+
+---
+
+## 4. Main Use Case  
+### Conduct Cancer Examina
+
+## 3. Preconditions
+- Patient is registered in the system  
+- Doctor is authenticated  
+- System is operational  
+- Network connection is available  
+
+---
+
+## 4. Main Use Case  
+### Conduct Cancer Examina
 ---
 
 ## 1. Primary Actor
@@ -11,6 +33,17 @@
 ---
 
 ## 2. Secondary Actors
+
+## 3. Preconditions
+- Patient is registered in the system  
+- Doctor is authenticated  
+- System is operational  
+- Network connection is available  
+
+---
+
+## 4. Main Use Case  
+### Conduct Cancer Examina
 - Patient  
 - Lab Technician  
 - Lab Equipment  
