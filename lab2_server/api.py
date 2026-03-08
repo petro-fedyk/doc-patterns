@@ -1,5 +1,7 @@
 
-from fastapi import FastAPI, HTTPException, Depends, File, UploadFile
+from fastapi import FastAPI, HTTPException, Depends, File, UploadFile, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from data.database import SessionLocal, engine, Base
 from data.models import Patient, Doctor, Examination, TestResult
@@ -7,8 +9,14 @@ from typing import List
 from pydantic import BaseModel
 import csv
 
+from controllers.patient_controller import router as patient_router
+from controllers.doctor_controller import router as doctor_router
+from controllers.examination_controller import router as examination_router
+from controllers.test_result_controller import router as test_result_router
 
-app = FastAPI(title="Lab2 Medical API", description="Swagger UI for all tables", version="1.0.0")
+
+app = FastAPI(title="Lab3 Medical MVC App", description="MVC Web Application with Swagger", version="2.0.0")
+templates = Jinja2Templates(directory="templates")
 
 # Create tables if not exist
 Base.metadata.create_all(bind=engine)
@@ -162,3 +170,16 @@ async def import_csv(file: UploadFile = File(...), db: Session = Depends(get_db)
         db.commit()
         imported += 1
     return {"imported": imported}
+
+
+# Include MVC HTML routers
+app.include_router(patient_router)
+app.include_router(doctor_router)
+app.include_router(examination_router)
+app.include_router(test_result_router)
+
+
+# Home page
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
