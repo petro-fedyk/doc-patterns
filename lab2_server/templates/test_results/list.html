@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Test Results{% endblock %}
+{% block content %}
+<h2>Test Results</h2>
+<a href="/test_results/create" class="btn btn-success mb-3">+ Add Test Result</a>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Examination ID</th>
+			<th>File Type</th>
+			<th>File Path</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for r in results %}
+		<tr>
+			<td>{{ r.id }}</td>
+			<td>{{ r.examination_id }}</td>
+			<td>{{ r.file_type }}</td>
+			<td>{{ r.file_path }}</td>
+			<td>
+				<a href="/test_results/edit/{{ r.id }}" class="btn btn-sm btn-warning">Edit</a>
+				<form action="/test_results/delete/{{ r.id }}" method="post" style="display:inline">
+					<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

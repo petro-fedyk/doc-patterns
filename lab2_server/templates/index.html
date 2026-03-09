@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="text-center mt-5">
+	<h1>Lab3 — Medical Examination System</h1>
+	<p class="lead">MVC Web Application</p>
+	<hr>
+	<div class="row mt-4">
+		<div class="col-md-3">
+			<a href="/patients/" class="btn btn-outline-primary btn-lg w-100 mb-3">Patients</a>
+		</div>
+		<div class="col-md-3">
+			<a href="/doctors/" class="btn btn-outline-success btn-lg w-100 mb-3">Doctors</a>
+		</div>
+		<div class="col-md-3">
+			<a href="/examinations/" class="btn btn-outline-warning btn-lg w-100 mb-3">Examinations</a>
+		</div>
+		<div class="col-md-3">
+			<a href="/test_results/" class="btn btn-outline-danger btn-lg w-100 mb-3">Test Results</a>
+		</div>
+	</div>
+</div>
+{% endblock %}

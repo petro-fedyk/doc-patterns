@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit" if examination else "Create" }} Examination{% endblock %}
+{% block content %}
+<h2>{{ "Edit" if examination else "Create" }} Examination</h2>
+<form method="post" action="{{ '/examinations/edit/' ~ examination.id if examination else '/examinations/create' }}">
+	<div class="mb-3">
+		<label class="form-label">Patient</label>
+		<select name="patient_id" class="form-select" required>
+			<option value="">-- Select Patient --</option>
+			{% for p in patients %}
+			<option value="{{ p.id }}" {{ "selected" if examination and examination.patient_id == p.id }}>
+				{{ p.first_name }} {{ p.last_name }}
+			</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Doctor</label>
+		<select name="doctor_id" class="form-select" required>
+			<option value="">-- Select Doctor --</option>
+			{% for d in doctors %}
+			<option value="{{ d.id }}" {{ "selected" if examination and examination.doctor_id == d.id }}>
+				{{ d.first_name }} ({{ d.specialization }})
+			</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">Status</label>
+		<select name="status" class="form-select" required>
+			<option value="COMPLETED" {{ "selected" if examination and examination.status == "COMPLETED" }}>COMPLETED</option>
+			<option value="PENDING" {{ "selected" if examination and examination.status == "PENDING" }}>PENDING</option>
+			<option value="CANCELLED" {{ "selected" if examination and examination.status == "CANCELLED" }}>CANCELLED</option>
+		</select>
+	</div>
+	<button type="submit" class="btn btn-primary">Save</button>
+	<a href="/examinations/" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

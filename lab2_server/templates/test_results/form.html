@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit" if result else "Create" }} Test Result{% endblock %}
+{% block content %}
+<h2>{{ "Edit" if result else "Create" }} Test Result</h2>
+<form method="post" action="{{ '/test_results/edit/' ~ result.id if result else '/test_results/create' }}">
+	<div class="mb-3">
+		<label class="form-label">Examination</label>
+		<select name="examination_id" class="form-select" required>
+			<option value="">-- Select Examination --</option>
+			{% for e in examinations %}
+			<option value="{{ e.id }}" {{ "selected" if result and result.examination_id == e.id }}>
+				Examination #{{ e.id }} ({{ e.status }})
+			</option>
+			{% endfor %}
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">File Type</label>
+		<select name="file_type" class="form-select" required>
+			<option value="PDF" {{ "selected" if result and result.file_type == "PDF" }}>PDF</option>
+			<option value="JPEG" {{ "selected" if result and result.file_type == "JPEG" }}>JPEG</option>
+			<option value="VIDEO" {{ "selected" if result and result.file_type == "VIDEO" }}>VIDEO</option>
+		</select>
+	</div>
+	<div class="mb-3">
+		<label class="form-label">File Path</label>
+		<input type="text" name="file_path" class="form-control" value="{{ result.file_path if result else '' }}" required>
+	</div>
+	<button type="submit" class="btn btn-primary">Save</button>
+	<a href="/test_results/" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Examinations{% endblock %}
+{% block content %}
+<h2>Examinations</h2>
+<a href="/examinations/create" class="btn btn-success mb-3">+ Add Examination</a>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Patient ID</th>
+			<th>Doctor ID</th>
+			<th>Status</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for e in examinations %}
+		<tr>
+			<td>{{ e.id }}</td>
+			<td>{{ e.patient_id }}</td>
+			<td>{{ e.doctor_id }}</td>
+			<td>{{ e.status }}</td>
+			<td>
+				<a href="/examinations/edit/{{ e.id }}" class="btn btn-sm btn-warning">Edit</a>
+				<form action="/examinations/delete/{{ e.id }}" method="post" style="display:inline">
+					<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}
