@@ -5,6 +5,7 @@ from .strategies import (
     JsonFileOutputStrategy,
     KafkaOutputStrategy,
     RedisOutputStrategy,
+    FirebaseOutputStrategy,
 )
 
 __all__ = [
@@ -14,4 +15,5 @@ __all__ = [
     "JsonFileOutputStrategy",
     "KafkaOutputStrategy",
     "RedisOutputStrategy",
+    "FirebaseOutputStrategy",
 ]

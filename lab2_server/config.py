@@ -20,3 +20,8 @@ class Settings:
     redis_port: int = int(os.getenv("REDIS_PORT", "6379"))
     redis_db: int = int(os.getenv("REDIS_DB", "0"))
     redis_key: str = os.getenv("REDIS_KEY", "payroll_records")
+
+    firebase_database_url: str = os.getenv("FIREBASE_DATABASE_URL", "")
+    firebase_auth_token: str = os.getenv("FIREBASE_AUTH_TOKEN", "")
+    firebase_path: str = os.getenv("FIREBASE_PATH", "records")
+    firebase_service_account_path: str = os.getenv("FIREBASE_SERVICE_ACCOUNT_PATH", "")

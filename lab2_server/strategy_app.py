@@ -17,6 +17,10 @@ def run(limit: Optional[int] = None) -> None:
         redis_port=settings.redis_port,
         redis_db=settings.redis_db,
         redis_key=settings.redis_key,
+        firebase_database_url=settings.firebase_database_url or None,
+        firebase_auth_token=settings.firebase_auth_token or None,
+        firebase_path=settings.firebase_path or None,
+        firebase_service_account_path=settings.firebase_service_account_path or None,
     )
 
     try:

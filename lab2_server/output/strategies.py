@@ -88,3 +88,60 @@ class RedisOutputStrategy(OutputStrategy):
             self._client.close()
         except AttributeError:
             pass
+
+
+class FirebaseOutputStrategy(OutputStrategy):
+    def __init__(
+        self,
+        database_url: str,
+        auth_token: Optional[str] = None,
+        path: str = "records",
+        service_account_path: Optional[str] = None,
+        timeout: int = 10,
+    ) -> None:
+        self._database_url = database_url.rstrip("/")
+        self._auth_token = auth_token
+        self._path = path.strip("/")
+        self._service_account_path = service_account_path
+        self._timeout = timeout
+        self._db_ref = None
+
+        if self._service_account_path:
+            try:
+                import firebase_admin
+                from firebase_admin import credentials, db
+            except ImportError as exc:
+                raise ImportError(
+                    "firebase-admin is required for FirebaseOutputStrategy when using a service account. "
+                    "Install it with `pip install firebase-admin`."
+                ) from exc
+
+            if not firebase_admin._apps:
+                cred = credentials.Certificate(self._service_account_path)
+                firebase_admin.initialize_app(cred, {"databaseURL": self._database_url})
+            self._db_ref = db.reference(self._path)
+
+    def send(self, record: Dict[str, str]) -> None:
+        if self._db_ref is not None:
+            self._db_ref.push(record)
+            return
+
+        import urllib.parse
+        import urllib.request
+
+        query = {}
+        if self._auth_token:
+            query["auth"] = self._auth_token
+        query_str = f"?{urllib.parse.urlencode(query)}" if query else ""
+        url = f"{self._database_url}/{self._path}.json{query_str}"
+        payload = json.dumps(record, ensure_ascii=False).encode("utf-8")
+        request = urllib.request.Request(url, data=payload, method="POST")
+        request.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(request, timeout=self._timeout) as response:
+                response.read()
+        except Exception as exc:
+            raise RuntimeError(f"Failed to send record to Firebase at {url}") from exc
+
+    def close(self) -> None:
+        return None
