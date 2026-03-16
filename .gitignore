@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment files
+.env
+.env.*
+
+# Caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.cache/
+
+# Build artifacts
+build/
+dist/
+*.log
+
+# Data/output artifacts
+lab2_server/output/*.json
+lab2_server/output/*.csv
+lab2_server/output/*.txt
+lab2_server/lab2.db
+*.sqlite
+*.sqlite3
+
+# Generated datasets
+lab2_server/data.csv
+
+# Draw.io backup files
+.$*.drawio.bkp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
